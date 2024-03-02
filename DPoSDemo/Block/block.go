@@ -1,10 +1,10 @@
 package Block
 
 import (
-	"time"
-	"strconv"
 	"crypto/sha256"
 	"encoding/hex"
+	"strconv"
+	"time"
 )
 
 type Block struct {
@@ -22,7 +22,7 @@ type Block struct {
 	Validator string
 }
 
-func GenerateNextBlock(bmp int,oldBlock Block,validator string) Block {
+func GenerateNextBlock(bmp int, oldBlock Block, validator string) Block {
 
 	var newBlock Block
 	newBlock.PrefHash = oldBlock.HashCode
@@ -31,22 +31,18 @@ func GenerateNextBlock(bmp int,oldBlock Block,validator string) Block {
 	newBlock.Validator = validator
 	newBlock.BMP = bmp
 	newBlock.HashCode = SetHash(newBlock)
-    return newBlock
+	return newBlock
 }
 
 func SetHash(b Block) string {
 
-    hashCode := []byte(b.Validator+strconv.Itoa(b.Index)+b.TimeStamp+b.PrefHash+strconv.Itoa(b.BMP))
+	hashCode := []byte(b.Validator + strconv.Itoa(b.Index) + b.TimeStamp + b.PrefHash + strconv.Itoa(b.BMP))
 
-    sha := sha256.New()
+	sha := sha256.New()
 
-    sha.Write(hashCode)
+	sha.Write(hashCode)
 
-    hash := sha.Sum(nil)
+	hash := sha.Sum(nil)
 
-    //fmt.Print(hex.EncodeToString(hash))
-
-    return hex.EncodeToString(hash)
+	return hex.EncodeToString(hash)
 }
-
-
